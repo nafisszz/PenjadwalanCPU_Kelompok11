@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#07120E">
     <title>Simulasi Penjadwalan CPU</title>
+    <script>document.documentElement.classList.add('js')</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -27,14 +28,13 @@
                 <span>Penjadwal CPU</span>
             </a>
             <nav class="menu" id="menu" aria-label="Menu utama">
-                <a href="#beranda">Beranda</a>
-                <a href="#algoritma">Algoritma</a>
-                <a href="#input">Input Data</a>
-                <a href="#belajar">Belajar</a>
-                <a href="#latihan">Latihan</a>
-                <a class="btn btn-gold menu-cta" href="#input">Mulai Simulasi</a>
+                <a href="#beranda" data-r="beranda">Beranda</a>
+                <a href="#algoritma" data-r="algoritma">Algoritma</a>
+                <a href="#simulasi" data-r="simulasi">Simulasi Proses</a>
+                <a href="#belajar" data-r="belajar">Media Belajar</a>
+                <a class="btn btn-gold menu-cta" href="#simulasi">Mulai Simulasi</a>
             </nav>
-            <a class="btn btn-gold nav-cta" href="#input">Mulai Simulasi</a>
+            <a class="btn btn-gold nav-cta" href="#simulasi">Mulai Simulasi</a>
             <button class="burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false"
                 aria-controls="menu">
                 <svg width="20" height="20" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.8"
@@ -46,286 +46,283 @@
     </header>
 
     <main>
-        <section class="hero" id="beranda">
-            <div class="wrap">
-                <h1>Simulasi Penjadwalan CPU</h1>
-                <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
-                    <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
-                        stroke-linecap="round" />
-                </svg>
-                <p>Masukkan waktu kedatangan, burst time, dan prioritas tiap proses, pilih algoritma, lalu lihat Gantt
-                    Chart, tabel CT, TAT, WT, RT, serta alasan di balik setiap keputusan CPU. Lengkap dengan materi dan
-                    latihan soal.</p>
-                <div class="btns">
-                    <a class="btn btn-gold" href="#input">Mulai Simulasi</a>
-                    <button class="btn btn-out" id="heroContoh" type="button">Lihat Contoh Idle</button>
-                    <a class="btn btn-out" href="#belajar">Belajar dan Latihan</a>
-                </div>
-            </div>
-        </section>
+        <!-- ================= HALAMAN UTAMA ================= -->
+        <div id="pg-home" class="page">
 
-        <div class="wrap">
-            <div class="hl">
-                <div>
-                    <span class="pill">Maks. 6 proses</span>
-                    <h3>Dari data proses ke hasil dalam satu halaman</h3>
-                    <p>Setiap algoritma dihitung per satuan waktu, sehingga jeda CPU (idle) tercatat dengan benar.</p>
+            <section class="hero" id="beranda">
+                <svg class="fl fl1" viewBox="0 0 60 60" fill="none" stroke="#E0B84F" stroke-width="1.4"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M12 52C12 28 28 10 54 6c0 28-16 46-42 46zM12 52L36 26" />
+                </svg>
+                <svg class="fl fl2" viewBox="0 0 60 60" fill="none" stroke="#E0B84F" stroke-width="1.4"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M12 52C12 28 28 10 54 6c0 28-16 46-42 46zM12 52L36 26" />
+                </svg>
+                <svg class="fl fl3" viewBox="0 0 60 60" fill="none" stroke="#E0B84F" stroke-width="1.4"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M12 52C12 28 28 10 54 6c0 28-16 46-42 46zM12 52L36 26" />
+                </svg>
+                <div class="wrap hero-in">
+                    <h1><span class="w" style="--i:0">Simulasi</span> <span class="w" style="--i:1">Penjadwalan</span>
+                        <span class="w" style="--i:2">CPU</span></h1>
+                    <svg class="brush hbrush" viewBox="0 0 240 14" aria-hidden="true">
+                        <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                    <p class="fu" style="--d:.7s">Masukkan waktu kedatangan, burst time, dan prioritas tiap proses,
+                        pilih algoritma, lalu lihat Gantt Chart, tabel CT, TAT, WT, RT, serta alasan di balik setiap
+                        keputusan CPU.</p>
+                    <div class="btns fu" style="--d:.9s">
+                        <a class="btn btn-gold" href="#simulasi">Mulai Simulasi</a>
+                        <button class="btn btn-out" id="heroContoh" type="button">Lihat Contoh Idle</button>
+                        <a class="btn btn-out" href="#belajar">Media Belajar</a>
+                    </div>
+
+                    <div class="demo fu" id="demo" style="--d:1.1s"
+                        aria-label="Demo penjadwalan CPU yang berjalan otomatis">
+                        <div class="demo-top">
+                            <span class="pill" id="dAlgo">FCFS</span>
+                            <span class="dstate" id="dState" aria-live="off">Memulai…</span>
+                        </div>
+                        <div id="dTrackWrap"></div>
+                        <div class="dq"><span>Antrean siap</span>
+                            <div id="dQ" class="dqc"></div>
+                        </div>
+                        <p class="dmet" id="dMet"></p>
+                    </div>
+                    <a class="scrollhint" href="#algoritma" aria-label="Gulir ke bagian algoritma"><svg width="22"
+                            height="22" viewBox="0 0 22 22" fill="none" stroke="#E0B84F" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 8l6 6 6-6" />
+                        </svg></a>
                 </div>
-                <div class="badges">
-                    <span class="pill"><i class="dot"></i>6 algoritma</span>
-                    <span class="pill"><i class="dot"></i>Gantt Chart otomatis</span>
-                    <span class="pill"><i class="dot"></i>Contoh kasus idle</span>
-                    <span class="pill"><i class="dot"></i>Materi dan latihan soal</span>
+            </section>
+
+            <div class="wrap">
+                <div class="hl rv">
+                    <div>
+                        <span class="pill">Maks. 6 proses</span>
+                        <h3>Dari data proses ke hasil dalam satu halaman</h3>
+                        <p>Setiap algoritma dihitung per satuan waktu, sehingga jeda CPU (idle) tercatat dengan benar.
+                        </p>
+                    </div>
+                    <div class="badges">
+                        <span class="pill"><i class="dot"></i><b class="cnt" data-to="6">6</b> algoritma</span>
+                        <span class="pill"><i class="dot"></i><b class="cnt" data-to="4">4</b> metrik: CT, TAT, WT,
+                            RT</span>
+                        <span class="pill"><i class="dot"></i>Gantt Chart otomatis</span>
+                        <span class="pill"><i class="dot"></i>Contoh kasus idle</span>
+                    </div>
                 </div>
             </div>
+
+            <section id="algoritma">
+                <div class="wrap">
+                    <h2 class="t rv">Pilih Algoritma</h2>
+                    <svg class="brush rv" viewBox="0 0 240 14" aria-hidden="true">
+                        <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                    <p class="sub rv">Belum yakin? Jawab satu atau dua pertanyaan singkat, atau langsung klik kartu
+                        algoritma.</p>
+
+                    <div class="wizard rv" id="wizard">
+                        <span class="pill">Bantu saya memilih</span>
+                        <div class="wz-q">
+                            <p class="wz-label">1. Apa yang paling kamu utamakan?</p>
+                            <div class="chips">
+                                <button type="button" class="chip" data-g="goal" data-v="order"
+                                    aria-pressed="false">Urutan kedatangan</button>
+                                <button type="button" class="chip" data-g="goal" data-v="short"
+                                    aria-pressed="false">Waktu tunggu rata-rata sekecil mungkin</button>
+                                <button type="button" class="chip" data-g="goal" data-v="priority"
+                                    aria-pressed="false">Proses penting didahulukan</button>
+                                <button type="button" class="chip" data-g="goal" data-v="fair"
+                                    aria-pressed="false">Giliran merata untuk semua proses</button>
+                            </div>
+                        </div>
+                        <div class="wz-q" id="q2wrap" hidden>
+                            <p class="wz-label">2. Bolehkah CPU menyela proses yang sedang berjalan?</p>
+                            <div class="chips">
+                                <button type="button" class="chip" data-g="cut" data-v="no" aria-pressed="false">Tidak,
+                                    selesaikan dulu</button>
+                                <button type="button" class="chip" data-g="cut" data-v="yes" aria-pressed="false">Ya,
+                                    boleh disela</button>
+                            </div>
+                        </div>
+                        <div class="wz-result" id="wzResult" hidden aria-live="polite"></div>
+                    </div>
+
+                    <div class="filters rv" role="group" aria-label="Saring algoritma">
+                        <button type="button" class="chip" data-f="all" aria-pressed="true">Semua</button>
+                        <button type="button" class="chip" data-f="np" aria-pressed="false">Non-preemptive</button>
+                        <button type="button" class="chip" data-f="pre" aria-pressed="false">Preemptive</button>
+                    </div>
+                    <div class="grid" id="algoGrid"></div>
+                </div>
+            </section>
+
+            <section id="simulasi" class="sec-input">
+                <div class="wrap">
+                    <h2 class="t rv">Simulasi Proses</h2>
+                    <svg class="brush rv" viewBox="0 0 240 14" aria-hidden="true">
+                        <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                    <p class="sub rv">Isi AT dan BT tiap proses (maksimal 6), pilih algoritma, lalu klik Proses.</p>
+
+                    <div class="panel rv">
+                        <div class="toolbar">
+                            <span class="pill" id="cnt">3 dari 6 proses</span>
+                            <div class="field">
+                                <label for="algoSelect">Algoritma</label>
+                                <select id="algoSelect"></select>
+                            </div>
+                            <div class="field field-q" id="qrow" hidden>
+                                <label for="quantum">Quantum</label>
+                                <input id="quantum" type="text" inputmode="numeric" value="2" autocomplete="off">
+                                <small class="err" id="qerr"></small>
+                            </div>
+                        </div>
+                        <p class="algo-info" id="algoInfo"></p>
+
+                        <div class="presets">
+                            <span>Contoh:</span>
+                            <button type="button" class="chip" data-preset="idle">Idle · 4 proses</button>
+                            <button type="button" class="chip" data-preset="six">Idle · 6 proses</button>
+                            <button type="button" class="chip" data-preset="plain">Tanpa idle</button>
+                        </div>
+                        <p class="hint" id="presetNote"></p>
+
+                        <table class="inp">
+                            <thead>
+                                <tr>
+                                    <th class="c-pid">Proses</th>
+                                    <th><abbr title="Arrival Time">AT</abbr><small>waktu tiba</small></th>
+                                    <th><abbr title="Burst Time">BT</abbr><small>lama eksekusi</small></th>
+                                    <th class="pr-col">Priority<small>kecil = penting</small></th>
+                                    <th><span class="sr">Hapus</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="rows"></tbody>
+                        </table>
+
+                        <div class="actions">
+                            <button class="btn btn-gold btn-run" id="run" type="button">Proses</button>
+                            <button class="btn btn-out" id="add" type="button">Tambah Proses</button>
+                            <button class="btn btn-out" id="reset" type="button">Reset</button>
+                        </div>
+                        <p class="hint" id="prHint" hidden>Priority: angka lebih kecil berarti lebih penting. Semua
+                            nilai bilangan bulat (AT 0–99, BT dan Priority 1–99).</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hasil" hidden>
+                <div class="wrap">
+                    <h2 class="t">Hasil Perhitungan</h2>
+                    <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
+                        <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                    <div class="meta" id="meta"></div>
+
+                    <div class="box" id="ganttBox">
+                        <div class="gtools">
+                            <h3>Gantt Chart</h3>
+                            <div class="seg-toggle" role="group" aria-label="Tampilan Gantt Chart">
+                                <button type="button" data-view="row" aria-pressed="true">Satu baris</button>
+                                <button type="button" data-view="lane" aria-pressed="false">Per proses</button>
+                            </div>
+                        </div>
+                        <div class="gscroll" id="gscroll">
+                            <div id="gantt"></div>
+                        </div>
+                        <p class="note" id="gHint" hidden>Geser ke samping untuk melihat seluruh Gantt Chart.</p>
+                        <div class="legend" id="legend"></div>
+                    </div>
+
+                    <div class="box">
+                        <h3>Tabel Hasil</h3>
+                        <div class="scroll">
+                            <table class="res" id="resTable"></table>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <details open>
+                            <summary>Langkah Perhitungan</summary>
+                            <div class="tabs" role="group" aria-label="Jenis langkah perhitungan">
+                                <button type="button" class="chip" data-tab="p1" aria-pressed="true">Rumus per
+                                    proses</button>
+                                <button type="button" class="chip" data-tab="p2" aria-pressed="false">Keputusan
+                                    CPU</button>
+                                <button type="button" class="chip" data-tab="p3" aria-pressed="false">Rata-rata dan
+                                    CPU</button>
+                            </div>
+                            <div id="p1"></div>
+                            <div id="p2" hidden></div>
+                            <div id="p3" hidden></div>
+                        </details>
+                    </div>
+
+                    <div class="stats">
+                        <h2>Ringkasan Hasil Simulasi</h2>
+                        <div class="st"><b id="sTat">0</b><span>Rata-rata TAT</span><em id="cTat"></em></div>
+                        <div class="st"><b id="sWt">0</b><span>Rata-rata WT</span><em id="cWt"></em></div>
+                        <div class="st"><b id="sRt">0</b><span>Rata-rata RT</span><em id="cRt"></em></div>
+                        <div class="st"><b id="sCpu">0%</b><span>CPU Utilization</span><em id="cCpu"></em></div>
+                        <div class="st"><b id="sTp">0</b><span>Throughput</span><em id="cTp"></em></div>
+                    </div>
+
+                    <div class="box">
+                        <h3>Bandingkan Semua Algoritma</h3>
+                        <p class="note">Memakai data proses dan quantum yang sama. Nilai terbaik tiap kolom berwarna
+                            emas.</p>
+                        <div class="scroll">
+                            <table class="res" id="cmpTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
-        <section id="algoritma">
-            <div class="wrap">
-                <h2 class="t">Pilih Algoritma</h2>
-                <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
-                    <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
-                        stroke-linecap="round" />
-                </svg>
-                <p class="sub">Belum yakin? Jawab satu atau dua pertanyaan singkat, atau langsung klik kartu algoritma.
-                </p>
-
-                <div class="wizard" id="wizard">
-                    <span class="pill">Bantu saya memilih</span>
-                    <div class="wz-q">
-                        <p class="wz-label">1. Apa yang paling kamu utamakan?</p>
-                        <div class="chips">
-                            <button type="button" class="chip" data-g="goal" data-v="order" aria-pressed="false">Urutan
-                                kedatangan</button>
-                            <button type="button" class="chip" data-g="goal" data-v="short" aria-pressed="false">Waktu
-                                tunggu rata-rata sekecil mungkin</button>
-                            <button type="button" class="chip" data-g="goal" data-v="priority"
-                                aria-pressed="false">Proses penting didahulukan</button>
-                            <button type="button" class="chip" data-g="goal" data-v="fair" aria-pressed="false">Giliran
-                                merata untuk semua proses</button>
-                        </div>
-                    </div>
-                    <div class="wz-q" id="q2wrap" hidden>
-                        <p class="wz-label">2. Bolehkah CPU menyela proses yang sedang berjalan?</p>
-                        <div class="chips">
-                            <button type="button" class="chip" data-g="cut" data-v="no" aria-pressed="false">Tidak,
-                                selesaikan dulu</button>
-                            <button type="button" class="chip" data-g="cut" data-v="yes" aria-pressed="false">Ya, boleh
-                                disela</button>
-                        </div>
-                    </div>
-                    <div class="wz-result" id="wzResult" hidden aria-live="polite"></div>
-                </div>
-
-                <div class="filters" role="group" aria-label="Saring algoritma">
-                    <button type="button" class="chip" data-f="all" aria-pressed="true">Semua</button>
-                    <button type="button" class="chip" data-f="np" aria-pressed="false">Non-preemptive</button>
-                    <button type="button" class="chip" data-f="pre" aria-pressed="false">Preemptive</button>
-                </div>
-                <div class="grid" id="algoGrid"></div>
-            </div>
-        </section>
-
-        <section id="input" class="sec-input">
-            <div class="wrap">
-                <h2 class="t">Masukkan Data Proses</h2>
-                <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
-                    <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
-                        stroke-linecap="round" />
-                </svg>
-                <p class="sub">Isi AT dan BT tiap proses (maksimal 6), pilih algoritma, lalu klik Proses.</p>
-
-                <div class="panel">
-                    <div class="toolbar">
-                        <span class="pill" id="cnt">3 dari 6 proses</span>
-                        <div class="field">
-                            <label for="algoSelect">Algoritma</label>
-                            <select id="algoSelect"></select>
-                        </div>
-                        <div class="field field-q" id="qrow" hidden>
-                            <label for="quantum">Quantum</label>
-                            <input id="quantum" type="text" inputmode="numeric" value="2" autocomplete="off">
-                            <small class="err" id="qerr"></small>
-                        </div>
-                    </div>
-                    <p class="algo-info" id="algoInfo"></p>
-
-                    <div class="presets">
-                        <span>Contoh:</span>
-                        <button type="button" class="chip" data-preset="idle">Idle · 4 proses</button>
-                        <button type="button" class="chip" data-preset="six">Idle · 6 proses</button>
-                        <button type="button" class="chip" data-preset="plain">Tanpa idle</button>
-                    </div>
-                    <p class="hint" id="presetNote"></p>
-
-                    <table class="inp">
-                        <thead>
-                            <tr>
-                                <th class="c-pid">Proses</th>
-                                <th><abbr title="Arrival Time">AT</abbr><small>waktu tiba</small></th>
-                                <th><abbr title="Burst Time">BT</abbr><small>lama eksekusi</small></th>
-                                <th class="pr-col">Priority<small>kecil = penting</small></th>
-                                <th><span class="sr">Hapus</span></th>
-                            </tr>
-                        </thead>
-                        <tbody id="rows"></tbody>
-                    </table>
-
-                    <div class="actions">
-                        <button class="btn btn-gold btn-run" id="run" type="button">Proses</button>
-                        <button class="btn btn-out" id="add" type="button">Tambah Proses</button>
-                        <button class="btn btn-out" id="reset" type="button">Reset</button>
-                    </div>
-                    <p class="hint" id="prHint" hidden>Priority: angka lebih kecil berarti lebih penting. Semua nilai
-                        bilangan bulat (AT 0–99, BT dan Priority 1–99).</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="hasil" hidden>
-            <div class="wrap">
-                <h2 class="t">Hasil Perhitungan</h2>
-                <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
-                    <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
-                        stroke-linecap="round" />
-                </svg>
-                <div class="meta" id="meta"></div>
-
-                <div class="box" id="ganttBox">
-                    <div class="gtools">
-                        <h3>Gantt Chart</h3>
-                        <div class="seg-toggle" role="group" aria-label="Tampilan Gantt Chart">
-                            <button type="button" data-view="row" aria-pressed="true">Satu baris</button>
-                            <button type="button" data-view="lane" aria-pressed="false">Per proses</button>
-                        </div>
-                    </div>
-                    <div class="gscroll" id="gscroll">
-                        <div id="gantt"></div>
-                    </div>
-                    <p class="note" id="gHint" hidden>Geser ke samping untuk melihat seluruh Gantt Chart.</p>
-                    <div class="legend" id="legend"></div>
-                </div>
-
-                <div class="box">
-                    <h3>Tabel Hasil</h3>
-                    <div class="scroll">
-                        <table class="res" id="resTable"></table>
+        <!-- ================= HALAMAN MEDIA BELAJAR ================= -->
+        <div id="pg-belajar" class="page" hidden>
+            <section class="pg-sec">
+                <div class="wrap">
+                    <h2 class="t">Media Belajar</h2>
+                    <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
+                        <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                    <p class="sub">Sebelas modul tentang penjadwalan CPU, dari dasar sistem operasi sampai topik
+                        lanjutan. Semua contoh dihitung langsung oleh simulator.</p>
+                    <div class="lp" id="learnTop">
+                        <nav class="lnav" id="lnav" aria-label="Daftar modul"></nav>
+                        <article class="read" id="mod"></article>
                     </div>
                 </div>
-
-                <div class="box">
-                    <details open>
-                        <summary>Langkah Perhitungan</summary>
-                        <div class="tabs" role="group" aria-label="Jenis langkah perhitungan">
-                            <button type="button" class="chip" data-tab="p1" aria-pressed="true">Rumus per
-                                proses</button>
-                            <button type="button" class="chip" data-tab="p2" aria-pressed="false">Keputusan CPU</button>
-                            <button type="button" class="chip" data-tab="p3" aria-pressed="false">Rata-rata dan
-                                CPU</button>
-                        </div>
-                        <div id="p1"></div>
-                        <div id="p2" hidden></div>
-                        <div id="p3" hidden></div>
-                    </details>
-                </div>
-
-                <div class="stats">
-                    <h2>Ringkasan Hasil Simulasi</h2>
-                    <div class="st"><b id="sTat">0</b><span>Rata-rata TAT</span><em id="cTat"></em></div>
-                    <div class="st"><b id="sWt">0</b><span>Rata-rata WT</span><em id="cWt"></em></div>
-                    <div class="st"><b id="sRt">0</b><span>Rata-rata RT</span><em id="cRt"></em></div>
-                    <div class="st"><b id="sCpu">0%</b><span>CPU Utilization</span><em id="cCpu"></em></div>
-                    <div class="st"><b id="sTp">0</b><span>Throughput</span><em id="cTp"></em></div>
-                </div>
-
-                <div class="box">
-                    <h3>Bandingkan Semua Algoritma</h3>
-                    <p class="note">Memakai data proses dan quantum yang sama. Nilai terbaik tiap kolom berwarna emas.
-                    </p>
-                    <div class="scroll">
-                        <table class="res" id="cmpTable"></table>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="belajar">
-            <div class="wrap">
-                <h2 class="t">Belajar Penjadwalan CPU</h2>
-                <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
-                    <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
-                        stroke-linecap="round" />
-                </svg>
-                <p class="sub">Materi singkat tentang istilah, rumus, dan cara kerja tiap algoritma. Semua contoh
-                    dihitung langsung oleh simulator.</p>
-
-                <div class="ltabs" id="learnTabs" role="group" aria-label="Topik materi">
-                    <button type="button" class="chip" data-t="istilah" aria-pressed="true">Istilah</button>
-                    <button type="button" class="chip" data-t="rumus" aria-pressed="false">Rumus</button>
-                    <button type="button" class="chip" data-t="algo" aria-pressed="false">Algoritma</button>
-                    <button type="button" class="chip" data-t="idle" aria-pressed="false">Kasus Idle</button>
-                    <button type="button" class="chip" data-t="salah" aria-pressed="false">Salah Kaprah</button>
-                </div>
-                <div class="lbox" id="learnPanels">
-                    <div data-p="istilah"></div>
-                    <div data-p="rumus" hidden></div>
-                    <div data-p="algo" hidden></div>
-                    <div data-p="idle" hidden></div>
-                    <div data-p="salah" hidden></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="latihan">
-            <div class="wrap">
-                <h2 class="t">Latihan Soal</h2>
-                <svg class="brush" viewBox="0 0 240 14" aria-hidden="true">
-                    <path d="M4 9C40 3 80 12 120 7S200 4 236 8" stroke="#E0B84F" stroke-width="4" fill="none"
-                        stroke-linecap="round" />
-                </svg>
-                <p class="sub">Uji pemahamanmu lewat kuis konsep, lalu hitung sendiri soal penjadwalan yang dibuat acak.
-                </p>
-
-                <div class="ltabs" id="practiceTabs" role="group" aria-label="Jenis latihan">
-                    <button type="button" class="chip" data-t="kuis" aria-pressed="true">Kuis Konsep</button>
-                    <button type="button" class="chip" data-t="hitung" aria-pressed="false">Soal Hitung</button>
-                </div>
-                <div class="lbox" id="practicePanels">
-                    <div data-p="kuis" id="quiz" aria-live="polite"></div>
-                    <div data-p="hitung" hidden>
-                        <div class="gen">
-                            <div class="field"><label for="genAlgo">Algoritma soal</label><select id="genAlgo"></select>
-                            </div>
-                            <div class="field"><label for="genN">Jumlah proses</label>
-                                <select id="genN">
-                                    <option value="3">3 proses</option>
-                                    <option value="4" selected>4 proses</option>
-                                    <option value="5">5 proses</option>
-                                    <option value="6">6 proses</option>
-                                </select>
-                            </div>
-                            <div class="field"><label for="genIdle">Kondisi idle</label>
-                                <select id="genIdle">
-                                    <option value="any">Acak</option>
-                                    <option value="yes">Ada idle</option>
-                                    <option value="no">Tanpa idle</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-gold" id="genBtn" type="button">Buat Soal Baru</button>
-                        </div>
-                        <div id="prob"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
-    <div class="ribbon">
-        <div class="wrap"><span>TAT = CT − AT</span><span>WT = TAT − BT</span><span>RT = start − AT</span></div>
+    <div class="ribbon" aria-label="Rumus utama">
+        <div class="mq">
+            <div class="mqg"><span>TAT = CT − AT</span><i>•</i><span>WT = TAT − BT</span><i>•</i><span>RT = start −
+                    AT</span><i>•</i><span>Util = sibuk ÷ total</span><i>•</i><span>TAT = CT − AT</span><i>•</i><span>WT
+                    = TAT − BT</span><i>•</i><span>RT = start − AT</span><i>•</i><span>Util = sibuk ÷
+                    total</span><i>•</i></div>
+            <div class="mqg" aria-hidden="true"><span>TAT = CT − AT</span><i>•</i><span>WT = TAT −
+                    BT</span><i>•</i><span>RT = start − AT</span><i>•</i><span>Util = sibuk ÷
+                    total</span><i>•</i><span>TAT = CT − AT</span><i>•</i><span>WT = TAT − BT</span><i>•</i><span>RT =
+                    start − AT</span><i>•</i><span>Util = sibuk ÷ total</span><i>•</i></div>
+        </div>
     </div>
     <footer>
-        <div class="wrap">Simulasi penjadwalan CPU: FCFS, SJF, SRTF, Priority, dan Round Robin, lengkap dengan materi
-            dan latihan soal.</div>
+        <div class="wrap">Simulasi penjadwalan CPU: FCFS, SJF, SRTF, Priority, dan Round Robin, lengkap dengan Media
+            Belajar.</div>
     </footer>
 
     <script src="script.js"></script>
